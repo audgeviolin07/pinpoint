@@ -16,27 +16,27 @@ from dotenv import load_dotenv
 
 #side bar contents
 with st.sidebar:
-    st.title('🤗💬 LLM Chat App')
-    st.markdown("""
-    ## About
-    This app is an LLM-powered chatbot built using:
-    - [Streamlit](https://streamlit.io/)
-    - [Langchain](https://python.langchian.com/)
-    - [OpenAI](https://platform.openai.com/docs/models) LLM model
-    - [Github](https://github.com/praj2408/Langchain-PDF-App-GUI) Repository
+    st.title(' New Chat ➕')
+    # st.markdown("""
+    # ## About
+    # This app is an LLM-powered chatbot built using:
+    # - [Streamlit](https://streamlit.io/)
+    # - [Langchain](https://python.langchian.com/)
+    # - [OpenAI](https://platform.openai.com/docs/models) LLM model
+    # - [Github](https://github.com/praj2408/Langchain-PDF-App-GUI) Repository
                 
-    """)
+    # """)
     add_vertical_space(5)
-    st.write("Made with ❤️ by Prajwal Krishna.")
+    st.write("")
     
     
 load_dotenv()
     
 def main():
-    st.header("Chat with PDF 💬")
+    st.header("Welcome to Pinpoint 💬")
     
     # upload a PDF file
-    pdf = st.file_uploader("Upload your PDF", type="pdf")
+    pdf = st.file_uploader("Contribute more accurate medical data:", type="pdf")
     
     #st.write(pdf)
     
@@ -80,21 +80,22 @@ def main():
             
         
         # Accept user questions/query
-        query = st.text_input("Ask questions about your PDF file")
+    add_vertical_space(29)
+    query = st.text_input("Ask your emergency medical questions:")
         #st.write(query)
         
-        if query:
+    if query:
+        
+        docs = VectorStore.similarity_search(query=query, k=3) # k return the most relevent information
+        
+        llm = OpenAI(model_name='gpt-3.5-turbo')
+        chain = load_qa_chain(llm=llm, chain_type='stuff')
+        with get_openai_callback() as cb:
             
-            docs = VectorStore.similarity_search(query=query, k=3) # k return the most relevent information
-            
-            llm = OpenAI(model_name='gpt-3.5-turbo')
-            chain = load_qa_chain(llm=llm, chain_type='stuff')
-            with get_openai_callback() as cb:
-                
-                response = chain.run(input_documents=docs, question=query)
-                print(cb)
-            st.write(response)
-            
+            response = chain.run(input_documents=docs, question=query)
+            print(cb)
+        st.write(response)
+        
             
             
 
