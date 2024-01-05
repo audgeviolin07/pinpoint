@@ -110,7 +110,7 @@ import streamlit as st
 import os
 import pickle
 from PyPDF2 import PdfReader
-from streamlit_extras.add_vertical_space import add_vertical_space
+#from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings  import OpenAIEmbeddings
 
@@ -136,7 +136,7 @@ with st.sidebar:
     # - [Github](https://github.com/praj2408/Langchain-PDF-App-GUI) Repository
                 
     # """)
-    add_vertical_space(5)
+    #add_vertical_space(5)
     st.write("")
     
     
@@ -202,7 +202,7 @@ def main():
             
         
         # Accept user questions/query
-    add_vertical_space(27)
+    #add_vertical_space(27)
     query = st.text_input("Ask your emergency medical questions:")
         #st.write(query)
         
@@ -219,11 +219,7 @@ def main():
         st.write(response)
         
             
-            
-
-    
-    
-    
+        
 if __name__ == "__main__":
     main()
     
